@@ -1,0 +1,37 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pratiko_backend
+    ports:
+      - "127.0.0.1:5000:5000"
+    environment:
+      - GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY:-}
+      - PRATIKO_SESSION_SECRET=${PRATIKO_SESSION_SECRET:-}
+      - PRATIKO_SESSION_SECURE=${PRATIKO_SESSION_SECURE:-0}
+      - DATABASE_URI=sqlite:////data/pratiko.db
+      - CORS_ORIGINS=${PRATIKO_DOCKER_CORS_ORIGINS:-http://localhost,http://127.0.0.1}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/api/v1/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - pratiko_data:/data
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: pratiko_frontend
+    ports:
+      - "127.0.0.1:80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pratiko_data:

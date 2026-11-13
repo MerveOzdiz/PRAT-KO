@@ -1,0 +1,52 @@
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*
+!.env.example
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pytest_cache/
+pratiko.db
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.log
+coverage/
+
+# Node & Frontend
+/package-lock.json
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+build/
+dist/
+
+# Historical local audit scripts
+/backend/test_*.py
+/backend/audit_all_market_sources.py
+/backend/deep_inspect_structured_data.py
+/backend/discover_*.py
+.venv/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
